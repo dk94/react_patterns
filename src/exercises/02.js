@@ -34,7 +34,14 @@ class Toggle extends React.Component {
     //
     // 🐨 you'll want to completely replace the code below with the above logic.
     const {on} = this.state
-    return <Switch on={on} onClick={this.toggle} />
+    return(
+      <div>
+      {React.Children.map(this.props.children, (child, index) => {
+        return React.cloneElement(child, { key : index});
+      })}
+      </div>
+    )
+  
   }
 }
 
