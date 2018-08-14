@@ -49,7 +49,7 @@ class Toggle extends React.Component {
   // 🐨 each of these compound components will need to be changed to use
   // ToggleContext.Consumer and rather than getting `on` and `toggle`
   // from props, it'll get it from the ToggleContext.Consumer value.
-  static On = ({on, children}) => (on ? children : null)
+  static On = () => 
   static Off = ({on, children}) => (on ? null : children)
   static Button = ({on, toggle, ...props}) => (
     <Switch on={on} onClick={toggle} {...props} />
@@ -66,12 +66,13 @@ class Toggle extends React.Component {
     // this.props.children as the children of the provider. Then we'll
     // expose the `on` state and `toggle` method as properties in the context
     // value (the value prop).
+    const ThemeContext = React.createContext({on: this.state.on, toggle: this.toggle});
 
-    return React.Children.map(this.props.children, child =>
-      React.cloneElement(child, {
-        on: this.state.on,
-        toggle: this.toggle,
-      }),
+
+    return (
+        <ThemeContext.Provider>
+          {this.props.children}
+        </ThemeContext.Provider> 
     )
   }
 }

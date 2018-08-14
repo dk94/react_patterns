@@ -4,6 +4,10 @@ import React from 'react'
 import {Switch} from '../switch'
 
 class Toggle extends React.Component {
+ 
+  static On = (props) => <div>{props.on && props.children}</div>;
+  static Off = (props) => <div>{!props.on && props.children}</div>;
+  static Button = (props) => <Switch onClick={props.toggle} on={props.on}/>;
   // you can create function components as static properties!
   // for example:
   // static Candy = (props) => <div>CANDY! {props.children}</div>
@@ -37,7 +41,7 @@ class Toggle extends React.Component {
     return(
       <div>
       {React.Children.map(this.props.children, (child, index) => {
-        return React.cloneElement(child, { key : index});
+        return React.cloneElement(child, {on, toggle: this.toggle});
       })}
       </div>
     )
@@ -54,8 +58,8 @@ function Usage({
   return (
     <Toggle onToggle={onToggle}>
       <Toggle.On>The button is on</Toggle.On>
-      <Toggle.Off>The button is off</Toggle.Off>
       <Toggle.Button />
+      <Toggle.Off>The button is off</Toggle.Off>
     </Toggle>
   )
 }
